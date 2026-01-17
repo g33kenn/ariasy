@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Secret - Save The Date</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Babel (to translate the React code) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Import Map: Tells the browser where to find React and Icons -->
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+      }
+    }
+    </script>
+</head>
+<body class="bg-slate-900">
+    <!-- This is where the React app will attach -->
+    <div id="root"></div>
+
+    <!-- The React Application Code -->
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { Search, MapPin, Calendar, Lock, Unlock, PartyPopper, Fingerprint, HelpCircle } from 'lucide-react';
+
+        function SaveTheDate() {
+          const [isOpen, setIsOpen] = useState(false);
+          const [decoding, setDecoding] = useState(false);
+          const [text, setText] = useState("ENCRYPTED DATA");
+
+          // Simple decoding effect for the title
+          useEffect(() => {
+            if (isOpen) {
+              const targetText = "ARIASY'S BIRTHDAY";
+              let iterations = 0;
+              const interval = setInterval(() => {
+                setText(targetText.split("").map((letter, index) => {
+                  if (index < iterations) return letter;
+                  return String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                }).join(""));
+                
+                if (iterations >= targetText.length) clearInterval(interval);
+                iterations += 1 / 3; 
+              }, 30);
+              return () => clearInterval(interval);
+            }
+          }, [isOpen]);
+
+          const handleOpen = () => {
+            setDecoding(true);
+            setTimeout(() => {
+              setIsOpen(true);
+              setDecoding(false);
+            }, 1200);
+          };
+
+          return (
+            <div className="min-h-screen bg-slate-900 text-slate-200 font-mono relative overflow-hidden flex items-center justify-center p-4">
+              {/* Background Atmosphere */}
+              <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
+                <div className="absolute top-10 left-10 text-9xl transform -rotate-12">?</div>
+                <div className="absolute bottom-20 right-10 text-9xl transform rotate-12">?</div>
+                <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] transform -translate-x-1/2 -translate-y-1/2"></div>
+              </div>
+
+              {/* Main Container */}
+              <div className="relative z-10 w-full max-w-md perspective-1000">
+                
+                {/* State 1: Locked File */}
+                {!isOpen && (
+                  <div 
+                    onClick={!decoding ? handleOpen : undefined}
+                    className={`
+                      bg-slate-800 border-2 border-dashed border-amber-500/50 p-8 rounded-xl shadow-2xl 
+                      cursor-pointer transform transition-all duration-500 hover:scale-105 active:scale-95
+                      flex flex-col items-center justify-center text-center h-[60vh]
+                      ${decoding ? 'animate-pulse border-green-500' : ''}
+                    `}
+                  >
+                    <div className="bg-slate-900 p-4 rounded-full mb-6 relative">
+                      <div className="absolute inset-0 border border-amber-500 rounded-full animate-ping opacity-20"></div>
+                      {decoding ? (
+                        <Unlock className="w-12 h-12 text-green-400" />
+                      ) : (
+                        <Lock className="w-12 h-12 text-amber-500" />
+                      )}
+                    </div>
+                    
+                    <h2 className="text-2xl font-bold tracking-widest mb-2 text-amber-500 font-serif">
+                      TOP SECRET
+                    </h2>
+                    <p className="text-sm text-slate-400 mb-8 uppercase tracking-widest">
+                      Classified Invitation
+                    </p>
+
+                    <div className="border border-slate-600 bg-slate-900/50 px-6 py-3 rounded text-sm text-slate-300">
+                      {decoding ? (
+                        <span className="text-green-400">DECRYPTING...</span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          <Fingerprint className="w-4 h-4" /> TAP TO ACCESS
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* State 2: The Invite Content */}
+                {isOpen && (
+                  <div className="bg-slate-50 text-slate-800 rounded-sm shadow-2xl transform transition-all duration-700 animate-in fade-in slide-in-from-bottom-10 rotate-1">
+                    
+                    {/* Folder Tab Look */}
+                    <div className="h-4 bg-amber-200 w-1/3 rounded-t-md ml-0 mt-[-16px]"></div>
+                    
+                    <div className="p-1 border-b-4 border-amber-400 relative overflow-hidden">
+                       {/* Stamp effect */}
+                      <div className="absolute top-4 right-4 border-4 border-red-700 text-red-700 font-bold px-2 py-1 transform rotate-12 text-xs uppercase tracking-widest opacity-80 pointer-events-none">
+                        Confidential
+                      </div>
+
+                      <div className="bg-white p-6 sm:p-8 min-h-[60vh] flex flex-col relative bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+                        
+                        {/* Header */}
+                        <div className="text-center mb-8 border-b-2 border-slate-200 pb-4">
+                          <div className="flex justify-center mb-3">
+                             <div className="relative">
+                                <Search className="w-10 h-10 text-slate-700" />
+                                <PartyPopper className="w-6 h-6 text-amber-500 absolute -top-1 -right-2" />
+                             </div>
+                          </div>
+                          <h3 className="text-xs font-bold tracking-[0.3em] uppercase text-slate-400 mb-1">
+                            Case File #210226
+                          </h3>
+                          <h1 className="text-2xl sm:text-3xl font-black uppercase text-slate-800 tracking-tighter">
+                            {text}
+                          </h1>
+                        </div>
+
+                        {/* Main Content */}
+                        <div className="space-y-6 flex-grow">
+                          
+                          {/* The Mission */}
+                          <div className="bg-slate-100 p-4 rounded border-l-4 border-amber-400">
+                            <h4 className="font-bold text-sm uppercase flex items-center gap-2 mb-2 text-slate-600">
+                              <Unlock className="w-4 h-4" /> Mission Objective
+                            </h4>
+                            <p className="text-sm leading-relaxed text-slate-700">
+                              Agents, your presence is requested for a high-priority operation. 
+                              We are initiating an <strong>Escape Game Investigation</strong>. 
+                              Prepare to uncover clues and celebrate.
+                            </p>
+                          </div>
+
+                          {/* Details Grid */}
+                          <div className="grid grid-cols-1 gap-4 mt-6">
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 bg-slate-800 text-white flex items-center justify-center rounded-full shrink-0">
+                                <Calendar className="w-5 h-5" />
+                              </div>
+                              <div>
+                                <p className="text-xs uppercase font-bold text-slate-400">Date of Operation</p>
+                                <p className="font-bold text-lg">February 21, 2026</p>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 bg-slate-800 text-white flex items-center justify-center rounded-full shrink-0">
+                                <HelpCircle className="w-5 h-5" />
+                              </div>
+                              <div>
+                                <p className="text-xs uppercase font-bold text-slate-400">Location & Time</p>
+                                <p className="font-bold text-md italic text-slate-600">Strictly Classified</p>
+                                <p className="text-xs text-amber-600">Intel to follow...</p>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        {/* Footer */}
+                        <div className="mt-10 text-center border-t border-slate-200 pt-6">
+                          <p className="text-xs font-mono text-slate-500 mb-2">
+                            STATUS: PENDING FURTHER INSTRUCTION
+                          </p>
+                          <p className="text-[10px] uppercase tracking-widest text-slate-400">
+                            Save this date within your archives
+                          </p>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              {/* Styles for perspective */}
+              <style>{`
+                .perspective-1000 {
+                  perspective: 1000px;
+                }
+              `}</style>
+            </div>
+          );
+        }
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<SaveTheDate />);
+    </script>
+</body>
+</html>
