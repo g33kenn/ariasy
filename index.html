@@ -3,227 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Secret - Save The Date</title>
-    
-    <!-- Tailwind CSS -->
+	<title>WTBC - Biblical Counseling & Discipleship Course</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Babel (to translate the React code) -->
-    <script src="https://unpkg.com/@babel/standalone@7.26.6/babel.min.js"></script>
-    
-    <!-- Import Map: Tells the browser where to find React and Icons -->
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@18.2.0",
-        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-        "lucide-react": "https://esm.sh/lucide-react@0.263.1"
-      }
-    }
-    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif-font { font-family: 'Merriweather', serif; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body class="bg-slate-900">
-    <!-- This is where the React app will attach -->
-    <div id="root"></div>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
 
-    <!-- The React Application Code -->
-    <script type="text/babel" data-type="module">
-        import React, { useState, useEffect } from 'react';
-        import { createRoot } from 'react-dom/client';
-        import { Search, MapPin, Calendar, Lock, Unlock, PartyPopper, Fingerprint, HelpCircle } from 'lucide-react';
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white pt-12 pb-16 px-6 shadow-xl rounded-b-[2rem] relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">West Toronto Baptist Church</h1>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">Biblical Counseling & Discipleship</h1>
+            <p class="text-lg md:text-2xl font-light mb-6">Based on "How People Change" by Paul David Tripp</p>
+            <!--<p class="text-base md:text-lg text-white max-w-2xl mx-auto italic">
+                "I would like to invite you to participate in our upcoming course designed to help us grow together in our faith."
+            </p>-->
+        </div>
+    </header>
 
-        function useScrambleText(targetText, active, initialText) {
-          const [text, setText] = useState(initialText || targetText.split("").map(() =>
-             String.fromCharCode(65 + Math.floor(Math.random() * 26))
-          ).join(""));
+    <!-- Navigation Tabs -->
+    <div class="max-w-md mx-auto -mt-6 relative z-20 flex justify-center bg-white rounded-full shadow-md p-1 border border-slate-100">
+        <button id="btn-summary" onclick="switchTab('summary')" class="flex-1 py-2 px-6 rounded-full text-sm md:text-base font-semibold bg-blue-600 text-white transition-colors duration-300">
+            Quick Summary
+        </button>
+        <button id="btn-details" onclick="switchTab('details')" class="flex-1 py-2 px-6 rounded-full text-sm md:text-base font-semibold text-slate-500 hover:text-blue-600 transition-colors duration-300">
+            Full Details
+        </button>
+    </div>
 
-          useEffect(() => {
-            if (active) {
-              let iterations = 0;
-              const interval = setInterval(() => {
-                setText(targetText.split("").map((letter, index) => {
-                  if (index < iterations) return letter;
-                  return String.fromCharCode(65 + Math.floor(Math.random() * 26));
-                }).join(""));
-                
-                if (iterations >= targetText.length) clearInterval(interval);
-                iterations += 1 / 3; 
-              }, 30);
-              return () => clearInterval(interval);
-            }
-          }, [active, targetText]);
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8 md:py-12">
 
-          return text;
-        }
-
-        function SaveTheDate() {
-          const [isOpen, setIsOpen] = useState(false);
-          const [decoding, setDecoding] = useState(false);
-          const text = useScrambleText("ARIASY'S BIRTHDAY", isOpen, "ENCRYPTED DATA");
-          const missionText = useScrambleText("MISSION OBJECTIVE", isOpen);
-
-          const handleOpen = () => {
-            setDecoding(true);
-            setTimeout(() => {
-              setIsOpen(true);
-              setDecoding(false);
-            }, 1200);
-          };
-
-          return (
-            <div className="min-h-screen bg-slate-900 text-slate-200 font-mono relative overflow-hidden flex items-center justify-center p-4">
-              {/* Background Atmosphere */}
-              <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-                <div className="absolute top-10 left-10 text-9xl transform -rotate-12">?</div>
-                <div className="absolute bottom-20 right-10 text-9xl transform rotate-12">?</div>
-                <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px] transform -translate-x-1/2 -translate-y-1/2"></div>
-              </div>
-
-              {/* Main Container */}
-              <div className="relative z-10 w-full max-w-md perspective-1000">
-                
-                {/* State 1: Locked File */}
-                {!isOpen && (
-                  <div 
-                    onClick={!decoding ? handleOpen : undefined}
-                    className={`
-                      bg-slate-800 border-2 border-dashed border-amber-500/50 p-8 rounded-xl shadow-2xl 
-                      cursor-pointer transform transition-all duration-500 hover:scale-105 active:scale-95
-                      flex flex-col items-center justify-center text-center h-[60vh]
-                      ${decoding ? 'animate-pulse border-green-500' : ''}
-                    `}
-                  >
-                    <div className="bg-slate-900 p-4 rounded-full mb-6 relative">
-                      <div className="absolute inset-0 border border-amber-500 rounded-full animate-ping opacity-20"></div>
-                      {decoding ? (
-                        <Unlock className="w-12 h-12 text-green-400" />
-                      ) : (
-                        <Lock className="w-12 h-12 text-amber-500" />
-                      )}
-                    </div>
-                    
-                    <h2 className="text-2xl font-bold tracking-widest mb-2 text-amber-500 font-serif">
-                      TOP SECRET
-                    </h2>
-                    <p className="text-sm text-slate-400 mb-8 uppercase tracking-widest">
-                      Classified Rahamefy Invitation
-                    </p>
-
-                    <div className="border border-slate-600 bg-slate-900/50 px-6 py-3 rounded text-sm text-slate-300">
-                      {decoding ? (
-                        <span className="text-green-400">DECRYPTING...</span>
-                      ) : (
-                        <span className="flex items-center gap-2">
-                          <Fingerprint className="w-4 h-4" /> TAP TO ACCESS
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* State 2: The Invite Content */}
-                {isOpen && (
-                  <div className="bg-slate-50 text-slate-800 rounded-sm shadow-2xl transform transition-all duration-700 animate-in fade-in slide-in-from-bottom-10 rotate-1">
-                    
-                    {/* Folder Tab Look */}
-                    <div className="h-4 bg-amber-200 w-1/3 rounded-t-md ml-0 mt-[-16px]"></div>
-                    
-                    <div className="p-1 border-b-4 border-amber-400 relative overflow-hidden">
-                       {/* Stamp effect */}
-                      <div className="absolute top-4 right-4 border-4 border-red-700 text-red-700 font-bold px-2 py-1 transform rotate-12 text-xs uppercase tracking-widest opacity-80 pointer-events-none">
-                        Confidential
-                      </div>
-
-                      <div className="bg-white p-6 sm:p-8 min-h-[60vh] flex flex-col relative bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
-                        
-                        {/* Header */}
-                        <div className="text-center mb-8 border-b-2 border-slate-200 pb-4">
-                          <div className="flex justify-center mb-3">
-                             <div className="relative">
-                                <Search className="w-10 h-10 text-slate-700" />
-                                <PartyPopper className="w-6 h-6 text-amber-500 absolute -top-1 -right-2" />
-                             </div>
-                          </div>
-                          <h3 className="text-xs font-bold tracking-[0.3em] uppercase text-slate-400 mb-1">
-                            Case File #210226
-                          </h3>
-                          <h1 className="text-2xl sm:text-3xl font-black uppercase text-slate-800 tracking-tighter">
-                            {text}
-                          </h1>
-                        </div>
-
-                        {/* Main Content */}
-                        <div className="space-y-6 flex-grow">
-                          
-                          {/* The Mission */}
-                          <div className="bg-slate-100 p-4 rounded border-l-4 border-amber-400">
-                            <h4 className="font-bold text-sm uppercase flex items-center gap-2 mb-2 text-slate-600">
-                              <Unlock className="w-4 h-4" /> {missionText}
-                            </h4>
-                            <p className="text-sm leading-relaxed text-slate-700">
-                              Agents, your expertise is requested to solve a murder. 
-                              We are initiating an <strong>Escape Game Investigation</strong>. 
-                              Prepare to brainstorm, eat and celebrate.
-                            </p>
-                          </div>
-
-                          {/* Details Grid */}
-                          <div className="grid grid-cols-1 gap-4 mt-6">
-                            <div className="flex items-center gap-4">
-                              <div className="w-12 h-12 bg-slate-800 text-white flex items-center justify-center rounded-full shrink-0">
-                                <Calendar className="w-5 h-5" />
-                              </div>
-                              <div>
-                                <p className="text-xs uppercase font-bold text-slate-400">Date of Operation</p>
-                                <p className="font-bold text-lg">February 21, 2026</p>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                              <div className="w-12 h-12 bg-slate-800 text-white flex items-center justify-center rounded-full shrink-0">
-                                <HelpCircle className="w-5 h-5" />
-                              </div>
-                              <div>
-                                <p className="text-xs uppercase font-bold text-slate-400">Location & Time</p>
-                                <p className="font-bold text-md italic text-slate-600">14 Callowhill Drive</p>
-                                <p className="text-amber-600">from 2 to 6pm</p>
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-
-                        {/* Footer */}
-                        <div className="mt-10 text-center border-t border-slate-200 pt-6">
-                          <p className="text-xs font-mono text-slate-500 mb-2">
-                            STATUS: PENDING YOUR <strong> RSVP by FEBRUARY 1st</strong>
-                          </p>
-                          <p className="text-[12px] uppercase tracking-widest text-slate-400">
-                            Please confirm mission acceptance to
-                          </p>
-                          <p className="text-[12px] uppercase tracking-widest text-slate-400">
-                            Ariasy & Elvin
-                          </p>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              {/* Styles for perspective */}
-              <style>{`
-                .perspective-1000 {
-                  perspective: 1000px;
-                }
-              `}</style>
+        <!-- ================= SUMMARY VIEW ================= -->
+        <section id="view-summary" class="fade-in block">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">Welcome, WTBC Church Family!</h2>
+                <p class="text-slate-600">Here is everything you need to know at a glance.</p>
             </div>
-          );
-        }
 
-        const root = createRoot(document.getElementById('root'));
-        root.render(<SaveTheDate />);
+            <!-- Info Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- What & Why -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start space-x-4">
+                    <div class="bg-blue-100 p-3 rounded-xl text-blue-600"><i data-lucide="book-open"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">What to Expect</h3>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1 text-sm">
+                            <li>Video lessons & group discussions</li>
+                            <li>Homework and time of prayer</li>
+                            <li>Personal spiritual growth</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- When -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start space-x-4">
+                    <div class="bg-indigo-100 p-3 rounded-xl text-indigo-600"><i data-lucide="calendar-clock"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">Schedule Summary</h3>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1 text-sm">
+                            <li><strong>Kickoff:</strong> May 16th & 17th</li>
+                            <li><strong>Evenings:</strong> May 26, June 2, June 9</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Cost -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start space-x-4">
+                    <div class="bg-emerald-100 p-3 rounded-xl text-emerald-600"><i data-lucide="credit-card"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">Cost & Materials</h3>
+                        <p class="text-slate-600 text-sm">
+                            <strong>$20 per person</strong> <br>
+                            <span class="text-s text-slate-400">covers the cost of the book</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-start space-x-4">
+                    <div class="bg-amber-100 p-3 rounded-xl text-amber-600"><i data-lucide="check-circle"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">Next Steps</h3>
+                        <p class="text-slate-600 text-sm mb-2">Please confirm your participation ASAP so we can order the books.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= DETAILS VIEW ================= -->
+        <section id="view-details" class="fade-in hidden space-y-8">
+            
+            <!-- Dates & Format -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="bg-blue-50 px-6 py-4 border-b border-blue-100">
+                    <h2 class="text-xl font-bold text-blue-900 flex items-center gap-2">
+                        <i data-lucide="calendar-range" class="w-5 h-5"></i> Dates and Format
+                    </h2>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <span class="bg-blue-100 text-blue-700 font-bold px-2 py-1 rounded text-xs mt-0.5">Sessions 1-6</span>
+                            <span><strong>May 16th</strong> (10 AM – 5 PM) and <strong>May 17th</strong> (2 PM – 6 PM)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="bg-blue-100 text-blue-700 font-bold px-2 py-1 rounded text-xs mt-0.5">Sessions 7-8</span>
+                            <span><strong>May 26th</strong> (7 PM – 10 PM)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="bg-blue-100 text-blue-700 font-bold px-2 py-1 rounded text-xs mt-0.5">Sessions 9-10</span>
+                            <span><strong>June 2nd</strong> (7 PM – 10 PM)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="bg-blue-100 text-blue-700 font-bold px-2 py-1 rounded text-xs mt-0.5">Sessions 11-12</span>
+                            <span><strong>June 9th</strong> (7 PM – 10 PM)</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-6 bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg text-sm text-amber-800">
+                        <strong>Note on Weekday Sessions:</strong> While the weekday sessions are tentatively scheduled for Tuesday nights, we will finalize the specific evening once the group is confirmed.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overview & Goals -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100">
+                    <h2 class="text-xl font-bold text-indigo-900 flex items-center gap-2">
+                        <i data-lucide="target" class="w-5 h-5"></i> Course Overview and Goals
+                    </h2>
+                </div>
+                <div class="p-6 text-slate-700 space-y-4 leading-relaxed">
+                    <p>Our goal for this course is to foster personal spiritual growth and better equip our members to walk alongside one another. By learning to speak the truth in love, we aim to build up the body of Christ and effectively care for each other’s spiritual needs, as described in <strong>Ephesians 4:12-16.</strong></p>
+                    
+                    <blockquote class="serif-font bg-slate-50 border-l-4 border-indigo-300 p-6 rounded-r-xl text-slate-600 italic leading-loose text-sm md:text-base relative">
+                        <i data-lucide="quote" class="w-8 h-8 text-indigo-200 absolute top-4 left-4 opacity-50"></i>
+                        <span class="relative z-10 pl-6 block">
+                            <strong>verse 12:</strong> to equip the saints for the work of ministry, for building up the body of Christ,<br>
+                            <strong>verse 13:</strong> until we all attain to the unity of the faith and of the knowledge of the Son of God, to mature manhood, to the measure of the stature of the fullness of Christ, [...]<br>
+                            <strong>verse 15:</strong> Rather, speaking the truth in love, we are to grow up in every way into him who is the head, into Christ,<br>
+                            <strong>verse 16:</strong> from whom the whole body, joined and held together by every joint with which it is equipped, when each part is working properly, makes the body grow so that it builds itself up in love.
+                        </span>
+                    </blockquote>
+                </div>
+            </div>
+
+            <!-- Registration -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="bg-emerald-50 px-6 py-4 border-b border-emerald-100">
+                    <h2 class="text-xl font-bold text-emerald-900 flex items-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> Registration and Materials
+                    </h2>
+                </div>
+                <div class="p-6 text-slate-700">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="bg-emerald-100 text-emerald-700 p-4 rounded-full">
+                            <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-lg">The total cost for the course and all required materials is <strong>$20 per person</strong> <br> It represents the cost of the book.</p>
+                        </div>
+                    </div>
+                    <p class="font-semibold text-emerald-800 bg-emerald-50 p-4 rounded-lg">
+                        Please confirm your participation as soon as possible so that we can order the necessary books in time for our first meeting.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Global Call to Action / Footer Section -->
+        <div class="mt-12 text-center max-w-2xl mx-auto space-y-6 border-t border-slate-200 pt-8">
+            <p class="text-slate-600">
+                If you have any questions, please feel free to speak with me directly. I am truly excited for this season of discipleship in our church family and look forward to hearing from you.
+            </p>
+            <p class="text-lg font-bold">
+                We're praying and hoping to count you all in !
+            </p>
+            
+            <div class="inline-block bg-white border border-slate-200 px-8 py-6 rounded-2xl shadow-sm mt-4">
+                <p class="text-2xl font-bold text-slate-800 serif-font">Ariasy</p>
+				<p class="text-slate-500 mb-1">ariasy.rahamefy@gmail.com</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white text-center py-6 text-sm mt-auto">
+        <p>West Toronto Baptist Church</p>
+    </footer>
+
+    <!-- Script for interactive tabs and icons -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            const summaryView = document.getElementById('view-summary');
+            const detailsView = document.getElementById('view-details');
+            const btnSummary = document.getElementById('btn-summary');
+            const btnDetails = document.getElementById('btn-details');
+
+            if (tabName === 'summary') {
+                // Show Summary, Hide Details
+                summaryView.classList.remove('hidden');
+                detailsView.classList.add('hidden');
+                
+                // Active button styling
+                btnSummary.className = "flex-1 py-2 px-6 rounded-full text-sm md:text-base font-semibold bg-blue-600 text-white transition-colors duration-300 shadow-sm";
+                btnDetails.className = "flex-1 py-2 px-6 rounded-full text-sm md:text-base font-semibold text-slate-500 hover:text-blue-600 hover:bg-slate-50 transition-colors duration-300 bg-transparent";
+            } else {
+                // Show Details, Hide Summary
+                detailsView.classList.remove('hidden');
+                summaryView.classList.add('hidden');
+                
+                // Active button styling
+                btnDetails.className = "flex-1 py-2 px-6 rounded-full text-sm md:text-base font-semibold bg-blue-600 text-white transition-colors duration-300 shadow-sm";
+                btnSummary.className = "flex-1 py-2 px-6 rounded-full text-sm md:text-base font-semibold text-slate-500 hover:text-blue-600 hover:bg-slate-50 transition-colors duration-300 bg-transparent";
+            }
+        }
     </script>
 </body>
 </html>
